@@ -12,11 +12,11 @@ import {Box,
         OutlinedInput,
         Chip,
 } from '@mui/material';
-import { eventNames } from "process";
 
 function FilterPanel(){
     const [status, setStatus] = useState<string[]>([]);
     const [requestType, setRequestType] = useState('');
+    const [category, setCategory]=useState('');
 
     const handleStatusChange = (event:any) => {
         setStatus(event.target.value);
@@ -25,6 +25,10 @@ function FilterPanel(){
     const handleRequestTypeChange = (event: any) =>{
         setRequestType(event.target.value);
     }
+
+    const handleCategoryChange =(event:any)=>{
+        setCategory(event.target.value);
+    };
 
 
     return(
@@ -73,9 +77,29 @@ function FilterPanel(){
     <InputLabel>Talep Turu</InputLabel>
     <Select value={requestType}
             label="Talep Turu"
-            onChange={handleRequestTypeChange}></Select>
+            onChange={handleRequestTypeChange}>
+                <MenuItem value="">Tumu</MenuItem>
+                <MenuItem value="maintenance">Bakim</MenuItem>
+                <MenuItem value="repair">Ariza</MenuItem>
+                <MenuItem value="installation">Kurulum</MenuItem>
+                <MenuItem value="inspection">Kontrol</MenuItem>
+            </Select>
 </FormControl>
-                
+
+{/* Talep kategorisi Filtre */}
+                <FormControl sx={{minWidth:200}}>
+    <InputLabel>Talep kategorisi</InputLabel>
+    <Select value={category}
+            label="Talep Kategorisi"
+            onChange={handleCategoryChange}>
+                <MenuItem value="">Tumu</MenuItem>
+                <MenuItem value="maintenance">Mekanik</MenuItem>
+                <MenuItem value="repair">Elektrik</MenuItem>
+                <MenuItem value="installation">Yazilim</MenuItem>
+                <MenuItem value="inspection">Hidrolik</MenuItem>
+                <MenuItem value="inspection">pnomatik</MenuItem>
+            </Select>
+</FormControl>
             </Box>
         </Paper>
     );
