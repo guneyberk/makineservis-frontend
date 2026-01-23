@@ -1,41 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import {Card,CardContent,Typography,Box} from '@mui/material';
 
 
 interface KPICardProps{
     title:string;
-    value:number;
+    value:number|string;
     icon:React.ReactNode;
     color:string;
+    unit?:string; // Optional the ? makes optional
 }
 
 function KPICard(props: KPICardProps){
+    
+    
     return(
-        
-        <Card sx={{maxWidth:300,minWidth:200}}>
+        <Card sx={{height:'100%'}}>
             <CardContent>
-                <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-                    {/*Left side - Text*/}
+                <Box sx={{display:'flex',justifyContent:'space-between', alignItems:'center'}}>
+                    {/*left Side - text*/}
                     <Box>
                         <Typography color="textSecondary" variant="overline">
-                            {props.title}
+                        {props.title}
                         </Typography>
-                        <Typography variant="h3">
-                            {props.value}
+                        <Typography variant="h4">
+                                {props.value}
+                                {props.unit && (<Typography component='span' variant="body1" sx={{marginLeft:1}}>
+                                {props.unit}
+                        </Typography>
+                        )}
                         </Typography>
                     </Box>
-                    {/* Right side -Icon*/}
-                    <Box sx={{backgroundColor : props.color,
-                        borderRadius:':%50',
-                        padding:2,
-                        display:"flex",
+                    {/* Right Side */}
+                    <Box
+                    sx={{
+                        backgroundColor:props.color,
+                        borderRadius:'20%',
+                        padding:1.5,
+                        display:'flex',
                     }}>
                         {props.icon}
                     </Box>
                 </Box>
             </CardContent>
         </Card>
-    )
+    );
 }
 
 export default KPICard;
+

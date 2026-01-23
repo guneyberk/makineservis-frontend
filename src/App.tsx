@@ -8,8 +8,10 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
+
 // Import our component
 import KPICard from './components/dashboard/KPICard';
+import FilterPanel from './components/dashboard/FilterPanel';
 
 function App() {
   return (
@@ -19,6 +21,10 @@ function App() {
       <Typography variant="h4" sx={{ marginBottom: 3 }}>
         Dashboard
       </Typography>
+      {/* Filters */}
+      <FilterPanel />
+
+      
 
       {/* KPI Cards Grid */}
       <Grid container spacing={3}>
@@ -60,6 +66,7 @@ function App() {
             value={2.5}
             icon={<AccessTimeIcon sx={{ color: 'white', fontSize: 40 }} />}
             color="#9c27b0"
+            unit='gun'
           />
         </Grid>
 
@@ -67,7 +74,7 @@ function App() {
         <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <KPICard
             title="Toplam Maliyet"
-            value={125000}
+            value='₺125.000'
             icon={<AttachMoneyIcon sx={{ color: 'white', fontSize: 40 }} />}
             color="#f44336"
           />
