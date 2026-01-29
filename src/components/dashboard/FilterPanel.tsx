@@ -21,6 +21,8 @@ function FilterPanel(){
     const [direction,setdirection] = useState('');
     const [startDate,setStartDate] = useState('');
     const [endDate,setEndDate] = useState('');
+    const [assignedUser,setAssignedUser] = useState('');
+    
 
     const handleStatusChange = (event:any) => {
         setStatus(event.target.value);
@@ -41,6 +43,10 @@ function FilterPanel(){
     const handleDirectionChange =(event:any)=>{
         setdirection(event.target.value);
     };
+    const handleAssignedUserChange =(event:any)=>{
+        setAssignedUser(event.target.value);
+    };
+
 
     return(
         <Paper sx={{padding:3, marginBottom:3}}>
@@ -141,6 +147,22 @@ function FilterPanel(){
                     slotProps={{inputLabel:{shrink:true}}}> 
 
                     </TextField>
+<FormControl sx={{minWidth:200}}>
+    <InputLabel>Atanan Kullanici/Grup</InputLabel>
+    <Select value={assignedUser}
+    label={'AtananKullanici/Grup'}
+    onChange={handleAssignedUserChange}
+    >    
+    </Select>
+    <MenuItem value="">Tumu</MenuItem>
+    <MenuItem value="user1">ariz ekibi</MenuItem>
+    <MenuItem value="user2">Ahmet</MenuItem>
+    <MenuItem value="user3">mehmet</MenuItem>
+    <MenuItem value="group1">ayse</MenuItem>
+    <MenuItem value="group2">bakim ekiibi</MenuItem>
+
+
+</FormControl>
             </Box>
         </Paper>
     );
