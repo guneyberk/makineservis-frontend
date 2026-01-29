@@ -11,12 +11,16 @@ import {Box,
         ListItemText,
         OutlinedInput,
         Chip,
+        TextField,
 } from '@mui/material';
 
 function FilterPanel(){
     const [status, setStatus] = useState<string[]>([]);
     const [requestType, setRequestType] = useState('');
     const [category, setCategory]=useState('');
+    const [direction,setdirection] = useState('');
+    const [startDate,setStartDate] = useState('');
+    const [endDate,setEndDate] = useState('');
 
     const handleStatusChange = (event:any) => {
         setStatus(event.target.value);
@@ -25,11 +29,18 @@ function FilterPanel(){
     const handleRequestTypeChange = (event: any) =>{
         setRequestType(event.target.value);
     }
-
     const handleCategoryChange =(event:any)=>{
         setCategory(event.target.value);
     };
-
+    const handleStartDateChange =(event:any)=>{
+        setStartDate(event.target.value);
+    };
+    const handleEndDateChange =(event:any)=>{
+        setEndDate(event.target.value);
+    };
+    const handleDirectionChange =(event:any)=>{
+        setdirection(event.target.value);
+    };
 
     return(
         <Paper sx={{padding:3, marginBottom:3}}>
@@ -100,6 +111,36 @@ function FilterPanel(){
                 <MenuItem value="inspection">pnomatik</MenuItem>
             </Select>
 </FormControl>
+<FormControl sx={{minWidth:200}}>
+    <InputLabel>Islem Yonu</InputLabel>
+    <Select value={direction}
+    label = "Islem Yonu"
+    onChange={handleDirectionChange}>
+        
+    <MenuItem value="">Tumu</MenuItem>
+    <MenuItem value="internal">Internal</MenuItem>
+    <MenuItem value="external">Harici</MenuItem>
+    <MenuItem value="outsource">Diskaynak</MenuItem>
+
+    </Select>
+
+</FormControl>
+<TextField label="Baslangic tarihi"
+                    type="date"
+                    value={startDate}
+                    onChange={handleStartDateChange}
+                    sx={{minWidth:200}}
+                    slotProps={{inputLabel:{shrink:true}}}> 
+
+                    </TextField>
+                    <TextField label="Bitis tarihi"
+                    type="date"
+                    value={endDate}
+                    onChange={handleEndDateChange}
+                    sx={{minWidth:200}}
+                    slotProps={{inputLabel:{shrink:true}}}> 
+
+                    </TextField>
             </Box>
         </Paper>
     );
