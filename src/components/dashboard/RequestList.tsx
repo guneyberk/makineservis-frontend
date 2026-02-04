@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useState} from "react";
+
 import {
   Box,
   Paper,
@@ -9,8 +10,14 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Tab,
+  Chip,
+  IconButton,
+  Checkbox,
 } from "@mui/material";
+
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface Request {
   id: string;
@@ -76,7 +83,51 @@ const mockRequest: Request[] = [
   },
 ];
 
+const getStatussColor = (
+  durum: string,
+): "success" | "warning" | "info" | "error" | "default" => {
+  switch (durum) {
+    case "Acik":
+      return "info";
+    case "Islemde":
+      return "warning";
+    case "Beklemede":
+      return "default";
+    case "Tamamlandi":
+      return "success";
+    case "Iptal Edildi":
+      return "error";
+    default:
+      return "default";
+  }
+};
+
 function RequestList() {
+  const [selected,setSelected] = useState<string[]>([]);
+
+  const handleSelectAll=(event:React.ChangeEvent<HTMLInputElement>)=>{
+    if(event.target.checked){
+      const allIds=mockRequest.map((req)=>req.id);
+      setSelected(allIds);
+    }
+    else{
+      setSelected([]);
+    }
+  };
+
+  const handleSelectOne = (id:string)=>{
+    const selectedIndex = selected.indexOf(id);
+    let newSelected:string[]=[];
+
+    if(selectedIndex===-1){
+      newSelected =[...selected,id];
+    } else{
+      newSelected = selected.filter((selectedId)=>selectedId!==id);
+    }
+    setSelected(newSelected);
+  };
+  const isSelected =(id:string)=>selected.indexOf(id)!==-1;
+
   return (
     <Paper sx={{ padding: 3, marginTop: 3 }}>
       <Typography variant="h6" sx={{ marginBottom: 2 }}>
@@ -87,6 +138,11 @@ function RequestList() {
         <Table>
           <TableHead>
             <TableRow>
+                            <TableCell padding="checkbox">
+                <Checkbox indeterminate={selected.length>0&&selected.length<mockRequest.length}
+                checked={mockRequest.length>0&&selected.length===mockRequest.length}
+                onChange={handleSelectAll}></Checkbox>
+              </TableCell>
               <TableCell>Talep No</TableCell>
               <TableCell>Başlık</TableCell>
               <TableCell>Müşteri/Tedarikçi</TableCell>
@@ -97,6 +153,7 @@ function RequestList() {
               <TableCell>Planlanan Tarih</TableCell>
               <TableCell>Oluşturma Tarihi</TableCell>
               <TableCell>Aksiyonlar</TableCell>
+              
             </TableRow>
           </TableHead>
           <TableBody>
@@ -106,12 +163,37 @@ function RequestList() {
                 <TableCell>{request.baslik}</TableCell>
                 <TableCell>{request.musteriTedarikci}</TableCell>
                 <TableCell>{request.kategori}</TableCell>
-                <TableCell>{request.durum}</TableCell>
+                <TableCell><Chip label={request.durum}
+                color={getStatussColor(request.durum)}
+                size="small"></Chip></TableCell>
                 <TableCell>{request.oncelik}</TableCell>
                 <TableCell>{request.atanan}</TableCell>
                 <TableCell>{request.planlananTarih}</TableCell>
                 <TableCell>{request.olusturmaTarihi}</TableCell>
-                <TableCell>Aksiyonlar</TableCell>
+                <TableCell>
+    <IconButton 
+        size="small" 
+        color="primary"
+        onClick={() => console.log('Görüntüle:', request.id)}
+    >
+        <VisibilityIcon />
+    </IconButton>
+    <IconButton 
+        size="small" 
+        color="info"
+        onClick={() => console.log('Düzenle:', request.id)}
+    >
+        <EditIcon />
+    </IconButton>
+    <IconButton 
+        size="small" 
+        color="error"
+        onClick={() => console.log('Sil:', request.id)}
+    >
+        <DeleteIcon />
+    </IconButton>
+</TableCell>
+
               </TableRow>
             ))}
           </TableBody>
@@ -120,3 +202,4 @@ function RequestList() {
     </Paper>
   );
 }
+
